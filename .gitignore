@@ -1,5 +1,6 @@
 archive
 .*
+!.project-metadata.yaml
 R
 source_data
 !.gitignore

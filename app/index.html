@@ -1,0 +1,98 @@
+<!--
+* ****************************************************************************
+*
+* CLOUDERA APPLIED MACHINE LEARNING PROTOTYPE (AMP)
+* (C) Cloudera, Inc. 2021
+* All rights reserved.
+*
+* Applicable Open Source License: Apache 2.0
+*
+* NOTE: Cloudera open source products are modular software products
+* made up of hundreds of individual components, each of which was
+* individually copyrighted. Each Cloudera open source product is a
+* collective work under U.S. Copyright Law. Your license to use the
+* collective work is as provided in your written agreement with
+* Cloudera. Used apart from the collective work, this file is
+* licensed for your use pursuant to the open source license
+* identified above.
+*
+* This code is provided to you pursuant a written agreement with
+* (i) Cloudera, Inc. or (ii) a third-party authorized to distribute
+* this code. If you do not have a written agreement with Cloudera nor
+* with an authorized and properly licensed third party, you do not
+* have any rights to access nor to use this code.
+*
+* Absent a written agreement with Cloudera, Inc. (“Cloudera”) to the
+* contrary, A) CLOUDERA PROVIDES THIS CODE TO YOU WITHOUT WARRANTIES OF ANY
+* KIND; (B) CLOUDERA DISCLAIMS ANY AND ALL EXPRESS AND IMPLIED
+* WARRANTIES WITH RESPECT TO THIS CODE, INCLUDING BUT NOT LIMITED TO
+* IMPLIED WARRANTIES OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY AND
+* FITNESS FOR A PARTICULAR PURPOSE; (C) CLOUDERA IS NOT LIABLE TO YOU,
+* AND WILL NOT DEFEND, INDEMNIFY, NOR HOLD YOU HARMLESS FOR ANY CLAIMS
+* ARISING FROM OR RELATED TO THE CODE; AND (D)WITH RESPECT TO YOUR EXERCISE
+* OF ANY RIGHTS GRANTED TO YOU FOR THE CODE, CLOUDERA IS NOT LIABLE FOR ANY
+* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE OR
+* CONSEQUENTIAL DAMAGES INCLUDING, BUT NOT LIMITED TO, DAMAGES
+* RELATED TO LOST REVENUE, LOST PROFITS, LOSS OF INCOME, LOSS OF
+* BUSINESS ADVANTAGE OR UNAVAILABILITY, OR LOSS OR CORRUPTION OF
+* DATA.
+*
+* ***************************************************************************
+-->
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>Canceled Flight Prediction</h1>
+    <div class="bigger" style="margin-bottom: 30px">Flight Info</div>
+
+    <div class="frm">
+        <div class="prow">
+            <label for='carrier'>Carrier:</label>
+            <select class="js-example-basic-single" style="width: 25em; padding-bottom: 10px;"
+                id="carrier"></select><br>
+        </div>
+        <div class="prow">
+            <label for='origin'>Origin:</label>
+            <select class="js-example-basic-single" style="width: 25em" id="origin"></select><br>
+        </div>
+        <div class="prow">
+            <label for='destination'>Destination:</label>
+            <select class="js-example-basic-single" style="width: 25em" id="destination"></select><br>
+        </div>
+        <div class="prow">
+            <label for='week'>Week:</label>
+            <select class="js-example-basic-single" style="width: 25em" id="week"></select><br>
+        </div>
+        <div class="prow">
+            <label for='departure'>Departure Hour:</label>
+            <select class="js-example-basic-single" style="width: 25em" id="departure"></select><br>
+        </div>
+
+        <div class="results">
+            <input type="submit" class="btn" value="Will it be canceled?" onclick="go_fetch()"
+                style="float:left;"></input>
+
+            <div style="margin-left: 300px">
+                <div class="bigger" id='pred_value'>Predicted Value: </div>
+                <div class="bigger" id='proba_value'>Probability: </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <script src="js/script.js"></script>
+
+</body>

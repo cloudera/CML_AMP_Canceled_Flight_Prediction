@@ -30,6 +30,19 @@ environment_variables:
       Name of the Hive table that will be created and populated with the data used for this prototype.
       If the table already exists, the prototype will assume it already contains the data for this prototype.
 
+feature_dependencies:
+  - model_metrics
+
+runtimes:
+  - editor: Workbench
+    kernel: Python 3.6
+    edition: Standard
+
+engine_images:
+  - image_name: engine
+    tags:
+      - 14
+
 tasks:
   - type: create_job
     name: Install dependencies
@@ -118,7 +131,7 @@ tasks:
     entity_label: flight_model
     comment: Build flight prediction model
     examples:
-      - request: {"feature" : "US,DCA,BOS,1,16"}
+      - request: { "feature": "US,DCA,BOS,1,16" }
         response: 1
     target_file_path: code/6_model_serve.py
     target_function_name: predict_cancelled

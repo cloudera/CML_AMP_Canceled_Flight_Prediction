@@ -43,14 +43,14 @@
 # cancelled and not-cancelled classes. This sampled dataset is then saved to the local
 # project to be used for modeling in the 5_model_train.py
 
-import os
-import sys
-from pyspark.sql import SparkSession
-from pyspark.sql.types import *
-from pyspark.sql.functions import *
-
 
 def main():
+  
+    import os
+    import sys
+    from pyspark.sql import SparkSession
+    from pyspark.sql.types import *
+    from pyspark.sql.functions import *
 
     spark = (
         SparkSession.builder.appName("Airline Data Exploration")

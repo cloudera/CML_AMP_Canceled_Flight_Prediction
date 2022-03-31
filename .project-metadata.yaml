@@ -34,7 +34,7 @@ feature_dependencies:
 
 runtimes:
   - editor: Workbench
-    kernel: Python 3.9
+    kernel: Python 3.7
     edition: Standard
 
 tasks:

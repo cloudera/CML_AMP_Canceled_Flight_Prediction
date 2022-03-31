@@ -142,4 +142,3 @@ tasks:
     script: code/7_application.py
     environment_variables:
       TASK_TYPE: START_APPLICATION
-u8

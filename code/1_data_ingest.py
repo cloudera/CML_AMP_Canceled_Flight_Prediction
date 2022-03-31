@@ -115,14 +115,19 @@
 #        prior to 2009.
 #     2. set_2/* - 10 separate .csv files (~8GB in total) of airline delay data corresponding to years 2009 - 2018
 
-
+import os
+import sys
+    
 def main():
   
-    import os
-    import sys
     from pyspark.sql import SparkSession
-    from pyspark.sql.types import *
-    from pyspark.sql.functions import *
+    from pyspark.sql.types import (
+      StructType, 
+      StructField, 
+      DoubleType,
+      StringType,
+    )
+    #from pyspark.sql.functions import *
 
     spark = (
         SparkSession.builder.appName("PythonSQL")

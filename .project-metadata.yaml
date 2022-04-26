@@ -72,22 +72,22 @@ tasks:
     memory: 2
     short_summary: Running job to ingest raw data files
 
-  - type: create_job
-    name: Preprocess data
-    entity_label: preprocess_data
-    script: code/3_data_processing.py
-    arguments: None
-    short_summary: Job to process raw data files
-    long_summary: >-
-      This script will only run if STORAGE_MODE is set to external
-    environment:
-      TASK_TYPE: CREATE/RUN_JOB
+#  - type: create_job
+#    name: Preprocess data
+#    entity_label: preprocess_data
+#    script: code/3_data_processing.py
+#    arguments: None
+#    short_summary: Job to process raw data files
+#    long_summary: >-
+#      This script will only run if STORAGE_MODE is set to external
+#    environment:
+#      TASK_TYPE: CREATE/RUN_JOB
 
-  - type: run_job
-    entity_label: preprocess_data
-    cpu: 4
-    memory: 12
-    short_summary: Running job to process raw data files
+#  - type: run_job
+#    entity_label: preprocess_data
+#    cpu: 4
+#    memory: 12
+#    short_summary: Running job to process raw data files
 
   - type: create_job
     name: Train Flight Delay Prediction Model

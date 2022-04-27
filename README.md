@@ -46,3 +46,8 @@ There are three ways to launch the this prototype on CML:
 3. **Manual Setup** - In a CML workspace, click "New Project", add a Project Name, select "Git" as the Initial Setup option, copy in the [repo URL](CML_AMP_Canceled_Flight_Prediction), click "Create Project". Then, follow the steps listed [in this document](code/README.md) in order
 
 If you deploy this project as an Applied ML Prototype (AMP) (options 1 or 2 above), you will need to specify whether to run the project with `STORAGE_MODE` set to `local` or `external`. Running in external mode requires having external storage configured on your CML workspace and triggers the project to ingest, process, and store ~20GB of raw data using Spark. Running in local mode will bypass the data ingestion and manipulation steps by using the `data/preprocessed_flight_data.tgz` file to train a model and deploy the application. While running the project as an AMP will install, setup, and build all project artifacts for you, it may still be instructive to review the documentation and files in the [code](code/) directory.
+
+
+----
+### **Note**
+This project may fail to complete automated setup on a CML workspace for certain hardware configurations.  If this happens, simply follow the **Manual Setup** steps above to enable the project artefacts. 

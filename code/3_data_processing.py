@@ -45,12 +45,11 @@
 
 import os
 import sys
-from pyspark.sql import SparkSession
-from pyspark.sql.types import *
-from pyspark.sql.functions import *
-
-
+    
 def main():
+  
+    from pyspark.sql import SparkSession
+    from pyspark.sql import functions as sqlfn
 
     spark = (
         SparkSession.builder.appName("Airline Data Exploration")
@@ -85,14 +84,14 @@ def main():
 
     all_flight_data = all_flight_data.withColumn(
         "HOUR",
-        substring(
-            when(length(col("CRS_DEP_TIME")) == 4, col("CRS_DEP_TIME")).otherwise(
-                concat(lit("0"), col("CRS_DEP_TIME"))
+        sqlfn.substring(
+            sqlfn.when(sqlfn.length(sqlfn.col("CRS_DEP_TIME")) == 4, sqlfn.col("CRS_DEP_TIME")).otherwise(
+                sqlfn.concat(sqlfn.lit("0"), sqlfn.col("CRS_DEP_TIME"))
             ),
             1,
             2,
         ).cast("integer"),
-    ).withColumn("WEEK", weekofyear("FL_DATE"))
+    ).withColumn("WEEK", sqlfn.weekofyear("FL_DATE"))
 
     smaller_all_flight_data = all_flight_data.select(
         "FL_DATE",

@@ -1,7 +1,7 @@
 # ###########################################################################
 #
 #  CLOUDERA APPLIED MACHINE LEARNING PROTOTYPE (AMP)
-#  (C) Cloudera, Inc. 2021
+#  (C) Cloudera, Inc. 2022
 #  All rights reserved.
 #
 #  Applicable Open Source License: Apache 2.0
@@ -45,67 +45,89 @@
 
 import os
 import sys
+
     
 def main():
-  
-    from pyspark.sql import SparkSession
-    from pyspark.sql import functions as sqlfn
+    import cml.data_v1 as cmldata
+    from pyspark import SparkContext
+    from pyspark.sql import functions as sqlfn   
+    
+    ### cleanup needed start
+    # These should come from the AMP
+    os.environ['SPARK_CONNECTION_NAME'] = "go01-aw-dl"
+    os.environ['DW_DATABASE'] = "airlines_iceberg"
+    os.environ['DW_TABLE'] = "flights"
+    
+    # These shound't be set after cml.data adds iceberg support
+    import glob
 
-    spark = (
-        SparkSession.builder.appName("Airline Data Exploration")
-        .config("spark.executor.memory", "8g")
-        .config("spark.executor.cores", "4")
-        .config("spark.driver.memory", "20g")
-        .config("spark.executor.instances", "4")
-        .config("spark.yarn.access.hadoopFileSystems", os.environ["STORAGE"])
-        .getOrCreate()
-    )
+    jars = glob.glob("/opt/spark/optional-lib/*.jar")
+    jarsList = ",".join(jars)
+    SparkContext.setSystemProperty("spark.jars",jarsList)
 
-    # Lets query the table from Hive
-    hive_database = os.environ["HIVE_DATABASE"]
-    hive_table = os.environ["HIVE_TABLE"]
-    hive_table_fq = hive_database + "." + hive_table
+    SparkContext.setSystemProperty("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")
+    SparkContext.setSystemProperty("spark.sql.catalog.spark_catalog.type", "hive")
+    SparkContext.setSystemProperty("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
+    ### cleanup needed end
 
-    flight_df = spark.sql(f"select * from {hive_table_fq}")
+
+    SparkContext.setSystemProperty('spark.executor.cores', '4')
+    SparkContext.setSystemProperty('spark.executor.memory', '8g')
+
+    SPARK_CONNECTION_NAME = os.getenv("SPARK_CONNECTION_NAME")
+    conn = cmldata.get_connection(SPARK_CONNECTION_NAME)
+    spark = conn.get_spark_session()
+
+    # Lets query the table
+    dw_database = os.environ["DW_DATABASE"]
+    dw_table = os.environ["DW_TABLE"]
+
+    flight_df = spark.sql(f"select * from {dw_database}.{dw_table}")
     flight_df.printSchema()
 
-    print(f"There are {flight_df.count()} records in {hive_table_fq}.")
+    print(f"There are {flight_df.count()} records in {dw_database}.{dw_table}.")
 
     # Since majority of flights are not cancelled, lets create a more balanced dataset
     # by undersampling from non-cancelled flights
-    sample_normal_flights = flight_df.filter("CANCELLED == 0").sample(
+    sample_normal_flights = flight_df.filter("cancelled == 0").sample(
         withReplacement=False, fraction=0.03, seed=3
     )
 
-    cancelled_flights = flight_df.filter("CANCELLED == 1")
+    cancelled_flights = flight_df.filter("cancelled == 1")
 
     all_flight_data = cancelled_flights.union(sample_normal_flights)
     all_flight_data.persist()
 
     all_flight_data = all_flight_data.withColumn(
-        "HOUR",
+        "hour",
         sqlfn.substring(
-            sqlfn.when(sqlfn.length(sqlfn.col("CRS_DEP_TIME")) == 4, sqlfn.col("CRS_DEP_TIME")).otherwise(
-                sqlfn.concat(sqlfn.lit("0"), sqlfn.col("CRS_DEP_TIME"))
+            sqlfn.when(sqlfn.length(sqlfn.col("crsdeptime")) == 4, sqlfn.col("crsdeptime")).otherwise(
+                sqlfn.concat(sqlfn.lit("0"), sqlfn.col("crsdeptime"))
             ),
             1,
             2,
         ).cast("integer"),
-    ).withColumn("WEEK", sqlfn.weekofyear("FL_DATE"))
+    ).withColumn(
+        "fl_date",
+        sqlfn.to_date(
+            sqlfn.concat_ws("/", sqlfn.col("year"), sqlfn.col("month"), sqlfn.col("dayofmonth")),
+            "yyyy/M/d",
+        ),
+    ).withColumn("week", sqlfn.weekofyear("fl_date"))
 
     smaller_all_flight_data = all_flight_data.select(
-        "FL_DATE",
-        "OP_CARRIER",
-        "OP_CARRIER_FL_NUM",
-        "ORIGIN",
-        "DEST",
-        "CRS_DEP_TIME",
-        "CRS_ARR_TIME",
-        "CANCELLED",
-        "CRS_ELAPSED_TIME",
-        "DISTANCE",
-        "HOUR",
-        "WEEK",
+        "fl_date",
+        "uniquecarrier",
+        "flightnum",
+        "origin",
+        "dest",
+        "crsdeptime",
+        "crsarrtime",
+        "cancelled",
+        "crselapsedtime",
+        "distance",
+        "hour",
+        "week",
     )
 
     smaller_all_flight_data.printSchema()

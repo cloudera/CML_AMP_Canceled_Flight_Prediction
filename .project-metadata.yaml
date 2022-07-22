@@ -9,25 +9,21 @@ environment_variables:
   STORAGE_MODE:
     default: local
     description: >-
-      This variable designates whether the project is built from scratch ('external') or from the preprocessed dataset included
-      in the repo ('local'). If this variable is set to 'external', the user must have access to the external storage configured 
-      on the CML workspace's environment, and the project setup tasks will download, process, and store ~20GB of raw data to the
-      storage location specificed below.
-  DATA_LOCATION:
-    default: data/flight_data
+      This variable designates whether the project uses external data ('external') or from the preprocessed dataset included
+      in the repo ('local'). If this variable is set to 'external', the user must have access to a CDW Catalog that has samples deployed.
+  SPARK_CONNECTION_NAME:
+    default: na
     description: >-
       Relative path that will be used to store the data used for this prototype.
       This should be a location you have write access to, and which is suitable for non-production data.
-  HIVE_DATABASE:
-    default: default
+  DW_DATABASE:
+    default: airlines
     description: >-
-      Name of the Hive database that will be used to create the Hive table used for this prototype.
-      This should be a Hive database you have write access to, and which is suitable for non-production data.
-  HIVE_TABLE:
-    default: flight_prototype
+      Name of the database that the flight data is available in.
+  DW_TABLE:
+    default: flighs
     description: >-
-      Name of the Hive table that will be created and populated with the data used for this prototype.
-      If the table already exists, the prototype will assume it already contains the data for this prototype.
+      Name of data warehouse table that holds the flights data. The prototype supports both hive and iceberg table formats.
 
 feature_dependencies:
   - model_metrics
@@ -43,7 +39,7 @@ tasks:
     entity_label: install_deps
     script: code/0_bootstrap.py
     arguments: None
-    short_summary: Job to install dependencies and download training data.
+    short_summary: Job to install dependencies.
     environment:
       TASK_TYPE: CREATE/RUN_JOB
 
@@ -51,26 +47,9 @@ tasks:
     entity_label: install_deps
     cpu: 1
     memory: 2
-    short_summary: Running install dependencies training job.
+    short_summary: Running install dependencies job.
     long_summary: >-
       Running the job to install dependencies.
-
-  - type: create_job
-    name: Ingest data
-    entity_label: ingest_data
-    script: code/1_data_ingest.py
-    arguments: None
-    short_summary: Job to ingest raw data files
-    long_summary: >-
-      This script will only run if STORAGE_MODE is set to external
-    environment:
-      TASK_TYPE: CREATE/RUN_JOB
-
-  - type: run_job
-    entity_label: ingest_data
-    cpu: 1
-    memory: 2
-    short_summary: Running job to ingest raw data files
 
   - type: create_job
     name: Preprocess data

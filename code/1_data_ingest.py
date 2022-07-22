@@ -385,7 +385,7 @@ def main():
 if __name__ == "__main__":
 
     if os.environ["STORAGE_MODE"] == "external":
-        main()
+        # main()
     else:
         print(
             "Skipping 1_data_ingest.py because excution is limited to local storage only."

@@ -51,7 +51,7 @@
 
 # Create the directories and upload data
 # from cmlbootstrap import CMLBootstrap
-# import os
+import os
 # import xml.etree.ElementTree as ET
 # import subprocess
 

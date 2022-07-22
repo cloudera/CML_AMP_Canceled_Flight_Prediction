@@ -1,29 +1,32 @@
 name: Cancelled Flight Prediction
-description: Predicting flight cancellations
+description: Predicting flight cancellations. This AMP use data connections and the Exploratory Data Science and Visualization capabilities. 
 author: Cloudera Inc.
 specification_version: 1.0
-prototype_version: 2.0
-date: "2022-03-29"
+prototype_version: 3.0
+date: "2022-07-22"
 
 environment_variables:
   STORAGE_MODE:
     default: local
     description: >-
       This variable designates whether the project uses external data ('external') or from the preprocessed dataset included
-      in the repo ('local'). If this variable is set to 'external', the user must have access to a CDW Catalog that has samples deployed.
+      in the repo ('local'). If this variable is set to 'external', the user must configure the below env variables.
   SPARK_CONNECTION_NAME:
     default: na
     description: >-
-      Relative path that will be used to store the data used for this prototype.
-      This should be a location you have write access to, and which is suitable for non-production data.
+      Only required when running in STORAGE_MODE=external. 
+      This variable sets the Spark Connection name in the Workspace.
   DW_DATABASE:
     default: airlines
     description: >-
+      Only required when running in STORAGE_MODE=external. 
       Name of the database that the flight data is available in.
   DW_TABLE:
-    default: flighs
+    default: flights
     description: >-
-      Name of data warehouse table that holds the flights data. The prototype supports both hive and iceberg table formats.
+      Only required when running in STORAGE_MODE=external. 
+      Name of data warehouse table that holds the flights data. 
+      The prototype supports both hive and iceberg table formats. For hive Spark 2.x for iceberg Spark 3.x needs to be used.
 
 feature_dependencies:
   - model_metrics
@@ -32,6 +35,8 @@ runtimes:
   - editor: Workbench
     kernel: Python 3.7
     edition: Standard
+    addons: ["Spark 2.4.8 - CDE 1.15 - HOTFIX-1"]
+
 
 tasks:
   - type: create_job

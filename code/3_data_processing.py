@@ -53,11 +53,6 @@ def main():
     from pyspark.sql import functions as sqlfn   
     
     ### cleanup needed start
-    # These should come from the AMP
-    os.environ['SPARK_CONNECTION_NAME'] = "go01-aw-dl"
-    os.environ['DW_DATABASE'] = "airlines_iceberg"
-    os.environ['DW_TABLE'] = "flights"
-    
     # These shound't be set after cml.data adds iceberg support
     import glob
 

@@ -111,8 +111,8 @@
 #     return proc
 
 
-# if os.environ["STORAGE_MODE"] == "local":
-#     !cd data && tar xzvf preprocessed_flight_data.tgz
+if os.environ["STORAGE_MODE"] == "local":
+    !cd data && tar xzvf preprocessed_flight_data.tgz
 # else:
 #     # Check if data already exists in external storage, if not, attempt to download the full
 #     # datasets to cloud storage, if error, set environment variable indicating the use of local

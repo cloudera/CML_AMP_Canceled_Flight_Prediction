@@ -79,8 +79,8 @@ tasks:
 
   - type: run_job
     entity_label: train_model
-    cpu: 2
-    memory: 6
+    cpu: 4
+    memory: 8
     short_summary: Run model training job.
     long_summary: >-
       Running the job to train models.

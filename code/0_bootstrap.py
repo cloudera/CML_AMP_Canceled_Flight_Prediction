@@ -47,9 +47,19 @@
 !pip install --progress-bar off -r requirements.txt
 
 import os
+import requests
 
-
-if os.environ["STORAGE_MODE"] == "local":
+if os.getenv("STORAGE_MODE") == "local":
     !cd data && tar xzvf preprocessed_flight_data.tgz
 else:
     pass
+
+# Start Exploratory Data Science and Visualization experience
+API_KEY = os.getenv("CDSW_API_KEY")
+CREATE_CDV_ENDPOINT = os.getenv("CDSW_PROJECT_URL") + "/create-cdv-app?"
+
+response = requests.post(CREATE_CDV_ENDPOINT, 
+                         json = {}, 
+                         headers={"Content-Type": "application/json"},
+                         auth=(API_KEY, "")
+                        )

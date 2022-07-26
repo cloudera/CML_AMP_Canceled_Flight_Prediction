@@ -55,6 +55,7 @@ else:
     pass
 
 # Start Exploratory Data Science and Visualization experience
+# https://blog.cloudera.com/the-power-of-exploratory-data-analysis-for-ml/
 API_KEY = os.getenv("CDSW_API_KEY")
 CREATE_CDV_ENDPOINT = os.getenv("CDSW_PROJECT_URL") + "/create-cdv-app?"
 

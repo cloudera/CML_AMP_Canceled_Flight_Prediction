@@ -1,7 +1,6 @@
 archive
 .*
 !.project-metadata.yaml
-!.explore
 R
 source_data
 !.gitignore
@@ -10,3 +9,7 @@ _*
 derby.log
 metastore_db*
 spark-warehouse
+!.explore
+.explore/django_cache
+.explore/arcviz.log
+.explore/media

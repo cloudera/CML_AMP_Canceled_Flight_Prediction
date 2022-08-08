@@ -8,15 +8,11 @@ There are a couple of steps needed at the start to configure the Project and Wor
 
 Open the file `0_bootstrap.py` in a normal workbench Python3 session. You only need a 1 CPU / 2 GB instance. Then **Run > Run All Lines**
 
-### 1 - Data Ingestion
-
-Open `1_data_ingest.py` in a Workbench session: Python3, 1 CPU, 2 GB. Run the file.
-
 ### 2 - Data Analysis
 
 This is a Jupyter Notebook that does some basic data exploration and visualization. It is here to show how this would be part of the data science workflow.
 
-Open a Jupyter Notebook session (rather than a work bench): Python3, 1 CPU, 2 GB and open the `2_data_analysis.ipynb` file. 
+Open a Jupyter Notebook session (rather than a work bench): Python3, 2 CPU, 8 GB and open the `2_data_analysis.ipynb` file. 
 
 At the top of the page click **Cells > Run All**.
 

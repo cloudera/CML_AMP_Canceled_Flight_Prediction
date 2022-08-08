@@ -5,9 +5,9 @@ This project is a Cloudera Machine Learning ([CML](https://www.cloudera.com/prod
 
 
 
-The primary goal of this repository is to build a gradient boosted (XGBoost) classification model to predict the likelihood of a flight being canceled based on years of historical records. To achieve that goal, this project demonstrates the end-to-end processing needed to take two large, raw datasets and transform them into a clean, unified dataset for model training and inference using Spark on CML. Additionally, this project deploys a hosted model and front-end application to allow users to interact with the trained model. 
+The primary goal of this repository is to build a gradient boosted (XGBoost) classification model to predict the likelihood of a flight being canceled based on years of historical records. To achieve that goal, this project demonstrates the end-to-end processing needed to take a large, raw dataset and transform it into a clean, stripped down dataset for model training and inference using Spark on CML. Additionally, this project deploys a hosted model and front-end application to allow users to interact with the trained model. 
 
-The two datasets used in this project come from [Kaggle](https://www.kaggle.com/yuanyuwendymu/airline-delay-and-cancellation-data-2009-2018) and the [Bureau of Transportation Statistics](https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time).
+The dataset used in this project come from [Kaggle](https://www.kaggle.com/yuanyuwendymu/airline-delay-and-cancellation-data-2009-2018).
 
 ## Project Structure
 
@@ -28,8 +28,9 @@ The project is organized with the following folder structure:
 
 By following the notebooks, scripts, and documentation in the `code` directory, you will understand how to perform similar tasks on CML, as well as how to use the platform's major features to your advantage. These features include:
 
+- CDP data access through data connection snippets
+- SQL-based and visual exploration of raw data
 - Data ingestion, cleaning, and processing with Spark
-- Hive table creation and querying
 - Streamlined model development
 - Point-and-click model deployment to a RESTful API endpoint
 - Application hosting for deploying frontend ML applications
@@ -45,7 +46,7 @@ There are three ways to launch the this prototype on CML:
 
 3. **Manual Setup** - In a CML workspace, click "New Project", add a Project Name, select "Git" as the Initial Setup option, copy in the [repo URL](CML_AMP_Canceled_Flight_Prediction), click "Create Project". Then, follow the steps listed [in this document](code/README.md) in order
 
-If you deploy this project as an Applied ML Prototype (AMP) (options 1 or 2 above), you will need to specify whether to run the project with `STORAGE_MODE` set to `local` or `external`. Running in external mode requires having external storage configured on your CML workspace and triggers the project to ingest, process, and store ~20GB of raw data using Spark. Running in local mode will bypass the data ingestion and manipulation steps by using the `data/preprocessed_flight_data.tgz` file to train a model and deploy the application. While running the project as an AMP will install, setup, and build all project artifacts for you, it may still be instructive to review the documentation and files in the [code](code/) directory.
+If you deploy this project as an Applied ML Prototype (AMP) (options 1 or 2 above), you will need to specify whether to run the project with `STORAGE_MODE` set to `local` or `external`. Running in external mode requires having access to a Virtual Warehouse that has the flights dataset available. Running in local mode will bypass the data access and manipulation steps by using the `data/preprocessed_flight_data.tgz` file to train a model and deploy the application. While running the project as an AMP will install, setup, and build all project artifacts for you, it may still be instructive to review the documentation and files in the [code](code/) directory.
 
 
 ----

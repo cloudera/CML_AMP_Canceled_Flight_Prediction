@@ -1,7 +1,7 @@
 # ###########################################################################
 #
 #  CLOUDERA APPLIED MACHINE LEARNING PROTOTYPE (AMP)
-#  (C) Cloudera, Inc. 2021
+#  (C) Cloudera, Inc. 2022
 #  All rights reserved.
 #
 #  Applicable Open Source License: Apache 2.0
@@ -61,18 +61,18 @@ cancelled_flights = cancelled_flights.dropna()
 # select features and target
 X = cancelled_flights[
     [
-        "OP_CARRIER",
-        "ORIGIN",
-        "DEST",
-        "WEEK",
-        "HOUR",
+        "uniquecarrier",
+        "origin",
+        "dest",
+        "week",
+        "hour",
     ]
 ]
 
-y = cancelled_flights[["CANCELLED"]]
+y = cancelled_flights[["cancelled"]]
 
 # one-hot encode categorical columns
-categorical_cols = ["OP_CARRIER", "ORIGIN", "DEST"]
+categorical_cols = ["uniquecarrier", "origin", "dest"]
 ct = ColumnTransformer(
     [("le", OneHotEncoder(), categorical_cols)], remainder="passthrough"
 )

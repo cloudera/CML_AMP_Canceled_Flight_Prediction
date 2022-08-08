@@ -52,18 +52,24 @@ def main():
     from pyspark import SparkContext
     from pyspark.sql import functions as sqlfn   
     
-    ### cleanup needed start
-    # These shound't be set after cml.data adds iceberg support
+    ### This code block can be ommitted after the CML Aug release
     import glob
 
-    jars = glob.glob("/opt/spark/optional-lib/*.jar")
-    jarsList = ",".join(jars)
+    paths = glob.glob("/opt/spark/optional-lib/*.jar")
+    workingJars = [
+        "hive-warehouse-connector-assembly.jar",
+        "iceberg-spark-runtime.jar",
+    ]
+    includeList = [
+        path for path in paths if any(jar in path for jar in workingJars)
+    ]
+    jarsList = ",".join(includeList)
     SparkContext.setSystemProperty("spark.jars",jarsList)
 
     SparkContext.setSystemProperty("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")
     SparkContext.setSystemProperty("spark.sql.catalog.spark_catalog.type", "hive")
     SparkContext.setSystemProperty("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
-    ### cleanup needed end
+    ###
 
 
     SparkContext.setSystemProperty('spark.executor.cores', '4')

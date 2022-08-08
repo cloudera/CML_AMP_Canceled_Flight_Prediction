@@ -47,12 +47,44 @@
 !pip install --progress-bar off -r requirements.txt
 
 import os
+import json
 import requests
+
+import cmlapi
+from cmlapi.rest import ApiException
+
+import cml.data_v1 as cmldata
+
+if os.getenv("STORAGE_MODE") == "external":
+    try: 
+        SPARK_CONNECTION_NAME = os.getenv("SPARK_CONNECTION_NAME")
+        conn = cmldata.get_connection(SPARK_CONNECTION_NAME)
+    except: 
+        print("Spark connection failed. Continuing in local mode.") 
+        # Update project STORAGE_MODE to local
+        os.environ["STORAGE_MODE"] = "local"
+
+        client = cmlapi.default_client()
+        project_id = os.getenv("CDSW_PROJECT_ID")
+        try:
+            project = client.get_project(project_id)
+            if project.environment == '':
+                env = {}
+            else:
+                env = json.loads(project.environment)
+
+            env["STORAGE_MODE"] = "local"
+            project.environment = json.dumps(env)
+            client.update_project(project,project_id)
+        except ApiException as e:
+            print("Exception when calling cmlapi->update_project: %s\n" % e)
+
 
 if os.getenv("STORAGE_MODE") == "local":
     !cd data && tar xzvf preprocessed_flight_data.tgz
 else:
     pass
+
 
 # Start Exploratory Data Science and Visualization experience
 # https://blog.cloudera.com/the-power-of-exploratory-data-analysis-for-ml/
@@ -64,3 +96,4 @@ response = requests.post(CREATE_CDV_ENDPOINT,
                          headers={"Content-Type": "application/json"},
                          auth=(API_KEY, "")
                         )
+print(response.text)

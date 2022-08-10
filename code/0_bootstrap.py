@@ -53,10 +53,10 @@ import requests
 import cmlapi
 from cmlapi.rest import ApiException
 
-import cml.data_v1 as cmldata
 
 if os.getenv("STORAGE_MODE") == "external":
-    try: 
+    try:
+        import cml.data_v1 as cmldata
         SPARK_CONNECTION_NAME = os.getenv("SPARK_CONNECTION_NAME")
         conn = cmldata.get_connection(SPARK_CONNECTION_NAME)
     except: 

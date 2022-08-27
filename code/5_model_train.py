@@ -102,7 +102,7 @@ def main():
 
 if __name__ == "__main__":
 
-    if os.environ["PREBUILT_MODEL"] == "true":
+    if os.environ["PREBUILT_MODEL"] == "yes":
         print(
             "Copying pre-built model to models/"
         )

@@ -31,7 +31,7 @@ environment_variables:
     default: true
     description: >-
       Deploy a pre-trained flight cancellation model.
-      If set to 'false', the a new model will be trained.
+      If set to 'false' a new model will be trained.
 
 feature_dependencies:
   - model_metrics

@@ -55,6 +55,19 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import classification_report
 
+
+if __name__ == "__main__":
+
+    if os.environ["STORAGE_MODE"] == "external":
+        main()
+    else:
+        print(
+            "Skipping 3_data_processing.py because excution is limited to local storage only."
+        )
+        pass
+
+
+def main():
 cancelled_flights = pd.read_csv("data/preprocessed_flight_data.csv")
 cancelled_flights = cancelled_flights.dropna()
 

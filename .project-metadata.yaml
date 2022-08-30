@@ -27,6 +27,11 @@ environment_variables:
       Only required when running in STORAGE_MODE=external. 
       Name of data warehouse table that holds the flights data. 
       The prototype supports both hive and iceberg table formats. For hive Spark 2.x for iceberg Spark 3.x needs to be used.
+  USE_PREBUILT_MODEL:
+    default: yes
+    description: >-
+      Deploy a pre-trained flight cancellation model.
+      If set to 'no' a new model will be trained.
 
 feature_dependencies:
   - model_metrics

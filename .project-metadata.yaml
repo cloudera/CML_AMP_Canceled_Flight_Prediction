@@ -9,24 +9,27 @@ environment_variables:
   STORAGE_MODE:
     default: local
     description: >-
-      This variable designates whether the project uses external data ('external') or from the preprocessed dataset included
-      in the repo ('local'). If this variable is set to 'external', the user must configure the below env variables.
+      Designate whether the project uses external data ('external') or the preprocessed dataset included
+      in the repo ('local'). 
+      NOTE: `EXTERNAL` MODE REQUIRES CML DATA SERVICES and the user must configure the env variables below. 
+      CDSW USERS MUST CHOSE 'LOCAL' MODE. 
   SPARK_CONNECTION_NAME:
     default: na
     description: >-
-      Only required when running in STORAGE_MODE=external. 
+      Required when STORAGE_MODE=external. 
       This variable sets the Spark Connection name in the Workspace.
   DW_DATABASE:
     default: airlines
     description: >-
-      Only required when running in STORAGE_MODE=external. 
+      Required when STORAGE_MODE=external. 
       Name of the database that the flight data is available in.
   DW_TABLE:
     default: flights
     description: >-
-      Only required when running in STORAGE_MODE=external. 
+      Required when STORAGE_MODE=external. 
       Name of data warehouse table that holds the flights data. 
-      The prototype supports both hive and iceberg table formats. For hive Spark 2.x for iceberg Spark 3.x needs to be used.
+      The prototype supports both Hive and Iceberg table formats. 
+      NOTE: Select Spark 2.x for Hive, and Spark 3.x for Iceberg. 
   USE_PREBUILT_MODEL:
     default: yes
     description: >-

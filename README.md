@@ -1,5 +1,8 @@
 # Canceled Flight Prediction
-This project is a Cloudera Machine Learning ([CML](https://www.cloudera.com/products/machine-learning.html)) **Applied Machine Learning Prototype** and has all the code and data needed to deploy an end-to-end machine learning project on a running CML instance.
+This project is a Cloudera Machine Learning ([CML](https://www.cloudera.com/products/machine-learning.html)) **Applied Machine Learning Prototype** and has all the code and data needed to deploy an end-to-end machine learning project on a running CML instance. 
+
+
+> NOTE: This AMP has been updated to showcase the Cloudera Data Connections and Exploratory Data Science and Visualization capabilities. To make use of these new features, a CML instance provisioned with a deployed CDW data catalog is required. For those on CDSW or without the Cloudera suite, the AMP will still function without these features by accessing a local version of the preprocessed dataset. 
 
 ![app](images/app.png)
 

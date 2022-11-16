@@ -50,7 +50,14 @@ import os
 import json
 import requests
 
-import cmlapi
+# Install cmlapi package
+try:
+    import cmlapi
+except ModuleNotFoundError:
+    import os
+    cluster = os.getenv("CDSW_API_URL")[:-1]+"2"
+    !pip3 install {cluster}/python.tar.gz
+    import cmlapi 
 from cmlapi.rest import ApiException
 
 

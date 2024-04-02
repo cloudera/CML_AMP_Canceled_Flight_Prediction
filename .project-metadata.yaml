@@ -99,7 +99,7 @@ tasks:
       Running the job to train models.
 
   - type: create_model
-    name: Flight Delay Prediction Model Endpoint
+    name: Flight Delay Prediction Model
     entity_label: flight_model
     description: This model api endpoint predicts flight delays
     short_summary: Create the flight delay prediction model api endpoint
@@ -109,7 +109,7 @@ tasks:
       num_replicas: 1
 
   - type: build_model
-    name: Flight Delay Prediction Model API Endpoint
+    name: Flight Delay Prediction Model
     entity_label: flight_model
     comment: Build flight prediction model
     examples:

@@ -40,9 +40,10 @@
 
 import numpy as np
 import pandas as pd
-import cdsw
 import json
 from joblib import dump, load
+import cml.models_v1 as models
+import cml.metrics_v1 as metrics
 
 # args = {"feature" : "US,DCA,BOS,1,16"}
 
@@ -50,7 +51,7 @@ ct = load("models/ct.joblib")
 pipe = load("models/pipe.joblib")
 
 
-@cdsw.model_metrics
+@models.cml_model(metrics=True)
 def predict_cancelled(args):
     inputs = args["feature"].split(",")
     inputs[3] = int(inputs[3])
@@ -72,9 +73,9 @@ def predict_cancelled(args):
     prediction = np.argmax(probas)
     proba = round(probas[0][prediction], 2)
     
-    cdsw.track_metric("input_data", args)
-    cdsw.track_metric("prediction", int(prediction))
-    cdsw.track_metric("proba", str(proba))
+    metrics.track_metric("input_data", args)
+    metrics.track_metric("prediction", int(prediction))
+    metrics.track_metric("proba", str(proba))
     
     response = {"prediction": int(prediction), "proba": str(proba)}
 

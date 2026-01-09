@@ -13,3 +13,4 @@ spark-warehouse
 .explore/django_cache
 .explore/arcviz.log
 .explore/media
+.explore/*.db-*

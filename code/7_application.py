@@ -40,7 +40,6 @@
 
 from flask import Flask, send_from_directory, request
 import logging
-from pandas.io.json import dumps as jsonify
 import os
 import random
 from IPython.display import Javascript, HTML
